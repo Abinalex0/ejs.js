@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin - Users List</title>
+  <style>
+    table { border-collapse: collapse; width: 70%; margin: 20px auto; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    th { background: #f4f4f4; }
+    body { font-family: Arial, sans-serif; text-align: center; }
+  </style>
+</head>
+<body>
+  <h1>Registered Users</h1>
+  <p>Welcome Admin: <strong><%= currentUser %></strong></p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Status</th>
+        <th>Role</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (users.length === 0) { %>
+        <tr>
+          <td colspan="4">No users found.</td>
+        </tr>
+      <% } else { %>
+        <% users.forEach(user => { %>
+          <tr>
+            <td><%= user.name %></td>
+            <td><%= user.email %></td>
+            <td><%= user.status %></td>
+            <td><%= user.role %></td>
+          </tr>
+        <% }) %>
+      <% } %>
+    </tbody>
+  </table>
+
+  <a href="/dashboard">⬅ Back to Dashboard</a>
+</body>
+</html>

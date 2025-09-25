@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>All Users</title>
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 80%;
+        margin: 20px auto;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: center;
+      }
+      th {
+        background: #f4f4f4;
+      }
+      .flash {
+        color: green;
+        margin: 10px;
+        font-weight: bold;
+        text-align: center;
+      }
+      .error {
+        color: red;
+        margin: 10px;
+        font-weight: bold;
+        text-align: center;
+      }
+      button {
+        padding: 5px 10px;
+        margin: 0 3px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 style="text-align: center">Registered Users</h1>
+    <p style="text-align: center">
+      Logged in as: <strong><%= currentUser %></strong>
+    </p>
+    <% if (message && message.length > 0) { %>
+    <p
+      class="<%= message[0].startsWith('❌') || message[0].startsWith('⚠️') ? 'error' : 'flash' %>"
+    >
+      <%= message[0] %>
+    </p>
+    <% } %>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% users.forEach(user => { %>
+        <tr>
+          <td><%= user.name %></td>
+          <td><%= user.email %></td>
+          <td><%= user.role %></td>
+          <td><%= user.status %></td>
+          <td>
+            <% if (user.status === "inactive") { %>
+
+            <form
+              action="/users/<%= user._id %>/enable"
+              method="POST"
+              style="display: inline"
+            >
+              <button type="submit">Enable</button>
+            </form>
+            <% } else { %>
+
+            <form
+              action="/users/<%= user._id %>/disable"
+              method="POST"
+              style="display: inline"
+            >
+              <button type="submit">Disable</button>
+            </form>
+            <% } %>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+
+    <div style="text-align: center; margin-top: 20px">
+      <a href="/dashboard">⬅ Back to Dashboard</a>
+    </div>
+  </body>
+</html>
